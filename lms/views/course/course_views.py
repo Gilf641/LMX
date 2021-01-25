@@ -43,17 +43,3 @@ class GradeBookCourseView(LoginRequiredMixin, UserPassesTestMixin, ExportMixin, 
         return redirect('lms:dashboard_home')
 
 
-# download csv file (django_tables2 method)
-def table_download(request):
-    table = StudentAssignmentTable(StudentAssignment.objects.all())
-
-    RequestConfig(request).configure(table)
-
-    export_format = request.GET.get("_export", None)
-    if TableExport.is_valid_format(export_format):
-        exporter = TableExport(export_format, table)
-        return exporter.response("table.{}".format(export_format))
-
-    return render(request, "lms/course/gradebook/course_gradebook_export.html", {
-        "table": table
-    })
