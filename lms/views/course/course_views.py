@@ -26,7 +26,11 @@ class GradeBookCourseView(LoginRequiredMixin, UserPassesTestMixin, ExportMixin, 
 
     template_name = 'lms/course/gradebook/course_gradebook.html'
     filterset_class = StudentAssignmentFilter
-
+    context_object_name = 'grades'
+    
+    def get_queryset(self):
+        return StudentAssignment.objects.filter(assignment__for_course__id=self.kwargs['course_id'])
+    
     # Restrict access to only course user (teacher) and admin
     def test_func(self):
         if self.request.user.role.is_admin:
@@ -42,18 +46,3 @@ class GradeBookCourseView(LoginRequiredMixin, UserPassesTestMixin, ExportMixin, 
         messages.warning(self.request, 'Requested resource is not accessible!')
         return redirect('lms:dashboard_home')
 
-
-# download csv file (django_tables2 method)
-def table_download(request):
-    table = StudentAssignmentTable(StudentAssignment.objects.all())
-
-    RequestConfig(request).configure(table)
-
-    export_format = request.GET.get("_export", None)
-    if TableExport.is_valid_format(export_format):
-        exporter = TableExport(export_format, table)
-        return exporter.response("table.{}".format(export_format))
-
-    return render(request, "lms/course/gradebook/course_gradebook_export.html", {
-        "table": table
-    })

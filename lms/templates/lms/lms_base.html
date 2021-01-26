@@ -15,7 +15,12 @@
   <link rel="icon" href="{% static 'favicon.ico' %}" type="image/gif" sizes="16x16">
 
   <!-- Title -->
-  <title>LMX Home</title>
+  <!-- <title>LMX Home</title> -->
+  <title>
+    {% block title %}
+    {% endblock title %}
+  </title>
+
 
   <!-- Stylesheets -->
   {% block stylesheet %}
