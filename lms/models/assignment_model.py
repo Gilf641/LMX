@@ -93,5 +93,3 @@ class StudentAssignment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='studentassignments')
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
 
-
-

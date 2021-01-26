@@ -21,7 +21,6 @@
 
 {% endif %}
 
-<!--ADD THE EXPORT PATH HERE @ href-->
 {% load querystring from django_tables2 %}
     <a href="{% querystring '_export'='csv' %}">
         <button class="btn btn btn btn-outline-primary btn-sm" type="button">Export Table(.csv)</button>
