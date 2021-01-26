@@ -233,7 +233,7 @@ urlpatterns = [
 
     # COURSE GRADEBOOK - Teacher's View
     path(
-        route="course/grades/",
+        route="course/grades/<int:course_id>/",
         view=GradeBookCourseView.as_view(),
         name='gradebook-course'
     ),

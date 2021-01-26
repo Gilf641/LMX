@@ -7,7 +7,7 @@ class StudentAssignmentTable(tables.Table):
         model = StudentAssignment
         template_name = "django_tables2/bootstrap4.html"
         
-        fields = ('user', 'assignment__name', 'assignment__max_grade')
+        fields = ('user', 'assignment__name', 'assignment__max_grade', 'assignment__for_course__title')
 
 import django_filters
 

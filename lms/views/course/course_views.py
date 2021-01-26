@@ -23,9 +23,12 @@ class CourseListView(ListView):
 class GradeBookCourseView(LoginRequiredMixin, UserPassesTestMixin, ExportMixin, SingleTableMixin, FilterView):
     model = StudentAssignment
     table_class = StudentAssignmentTable
-
+    # queryset = StudentAssignment.objects.filter(assignment__for_course__id=6)
     template_name = 'lms/course/gradebook/course_gradebook.html'
     filterset_class = StudentAssignmentFilter
+
+    def get_queryset(self):
+        return StudentAssignment.objects.filter(assignment__for_course__id=self.kwargs['course_id'])
 
     # Restrict access to only course user (teacher) and admin
     def test_func(self):
